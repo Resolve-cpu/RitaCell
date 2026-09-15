@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedido confirmado — RitaCell Comércio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#1a34c4; --blue-dark:#0e1f7a; --green:#1f9d55;
+    --ink:#0b1e3d; --text-soft:#5b6480; --neutral-50:#f7f8fb; --neutral-200:#e0e3ee;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;background:var(--neutral-50);color:var(--ink);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  h1{font-family:'Manrope',sans-serif;}
+  .card{background:#fff;border-radius:20px;max-width:420px;width:100%;padding:36px 28px;text-align:center;box-shadow:0 20px 50px -20px rgba(11,30,61,.2);}
+  .check{width:56px;height:56px;border-radius:50%;background:#e5f6ec;color:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+  h1{font-size:1.3rem;margin-bottom:10px;}
+  p{color:var(--text-soft);font-size:0.92rem;line-height:1.6;margin-bottom:6px;}
+  .receipt-link{display:inline-block;margin-top:16px;font-weight:700;color:var(--blue);text-decoration:underline;font-size:0.88rem;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;margin-top:24px;
+    background:var(--blue);color:#fff;font-weight:700;font-size:0.9rem;padding:13px 26px;border-radius:999px;text-decoration:none;
+  }
+  .order-note{margin-top:22px;padding-top:18px;border-top:1px solid var(--neutral-200);font-size:0.82rem;color:var(--text-soft);}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="check">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+  </div>
+  <h1 id="statusTitle">Pedido recebido!</h1>
+  <p id="statusText">Assim que confirmarmos o pagamento, avisamos você pelo WhatsApp quando o pedido estiver pronto para retirada na loja.</p>
+  <a id="receiptLink" class="receipt-link" href="#" target="_blank" rel="noopener" style="display:none;">Ver comprovante</a>
+  <div class="order-note">
+    RitaCell Comércio — Av. Miguel Estefno, 2015, Vila da Saúde, São Paulo
+  </div>
+  <a class="btn" href="index.html">Voltar para o site</a>
+</div>
+
+<script>
+  // A InfinitePay devolve alguns dados na URL quando o cliente volta
+  // do pagamento (receipt_url, order_nsu, método usado etc.)
+  const params = new URLSearchParams(window.location.search);
+  const receiptUrl = params.get("receipt_url");
+  if (receiptUrl) {
+    const link = document.getElementById("receiptLink");
+    link.href = receiptUrl;
+    link.style.display = "inline-block";
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finalizar pedido — RitaCell Comércio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#1a34c4; --blue-dark:#0e1f7a; --gold:#ffc629;
+    --ink:#0b1e3d; --ink-soft:#5b6480; --text-soft:#5b6480;
+    --neutral-50:#f7f8fb; --neutral-100:#eef0f6; --neutral-200:#e0e3ee;
+    --white:#fff; --green:#1f9d55; --danger:#b3435c;
+    --radius-card:16px; --radius-field:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;background:var(--neutral-50);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  input{font-family:inherit;}
+  h1,h2{font-family:'Manrope',sans-serif;}
+
+  .page{max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:40px;}
+
+  header{background:var(--blue);padding:16px 18px;position:sticky;top:0;z-index:60;}
+  .header-inner{display:flex;align-items:center;justify-content:space-between;max-width:480px;margin:0 auto;}
+  .logo-word{font-family:'Manrope',sans-serif;font-weight:800;font-size:18px;color:#fff;}
+  .secure-tag{display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:#fff;opacity:0.9;}
+  .secure-tag svg{width:14px;height:14px;}
+
+  main{padding:18px 16px 0;}
+
+  .co-card{background:var(--white);border:1px solid var(--neutral-200);border-radius:var(--radius-card);padding:18px;margin-bottom:16px;}
+  .co-label{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--text-soft);font-weight:700;margin-bottom:14px;}
+
+  .os-item{display:flex;align-items:center;gap:12px;padding:8px 0;}
+  .os-item + .os-item{border-top:1px solid var(--neutral-100);}
+  .os-item .thumb{width:52px;height:52px;border-radius:10px;overflow:hidden;flex-shrink:0;background:var(--neutral-50);display:flex;align-items:center;justify-content:center;color:var(--neutral-200);}
+  .os-item .thumb img{width:100%;height:100%;object-fit:cover;}
+  .os-item .meta{flex:1;min-width:0;}
+  .os-item .meta b{display:block;font-size:13.5px;font-weight:700;line-height:1.3;}
+  .os-item .meta .colour{font-size:12px;color:var(--text-soft);margin:2px 0;}
+  .os-item .meta .price{font-size:13.5px;font-weight:700;color:var(--blue);}
+  .qty-stepper{display:flex;align-items:center;border:1px solid var(--neutral-200);border-radius:20px;flex-shrink:0;}
+  .qty-stepper button{width:26px;height:26px;font-size:15px;font-weight:700;color:var(--text-soft);}
+  .qty-stepper span{width:20px;text-align:center;font-size:13px;font-weight:700;}
+
+  .os-totals{margin-top:14px;padding-top:14px;border-top:1px solid var(--neutral-100);}
+  .os-totals .row{display:flex;justify-content:space-between;font-size:13.5px;color:var(--text-soft);margin-bottom:10px;}
+  .os-totals .row span:last-child{color:var(--ink);font-weight:600;}
+  .os-totals .row.pickup span:last-child{color:var(--green);font-weight:700;}
+  .os-totals .row.total{margin-top:4px;padding-top:12px;border-top:1px solid var(--neutral-100);}
+  .os-totals .row.total span{font-weight:800;font-size:17px;color:var(--ink);}
+
+  .os-pay-icons{display:flex;gap:6px;margin-top:16px;padding-top:14px;border-top:1px solid var(--neutral-100);}
+  .pay-badge{display:flex;align-items:center;justify-content:center;height:26px;width:44px;border:1px solid var(--neutral-200);border-radius:7px;background:#fff;font-size:9px;font-weight:800;color:var(--text-soft);}
+  .os-secure-line{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--text-soft);margin-top:12px;}
+  .os-secure-line svg{width:13px;height:13px;color:var(--green);flex-shrink:0;}
+  .os-secure-line b{color:var(--blue);font-weight:700;}
+
+  .co-empty{text-align:center;padding:20px 8px;color:var(--text-soft);font-size:14px;display:none;}
+  .co-empty a{color:var(--blue);font-weight:700;text-decoration:underline;}
+
+  .field{margin-bottom:14px;}
+  .field:last-child{margin-bottom:0;}
+  label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:7px;}
+  label .req{color:var(--text-soft);font-weight:400;}
+  input[type="text"], input[type="email"], input[type="tel"]{
+    width:100%;padding:12px 14px;border:1.5px solid var(--neutral-200);border-radius:var(--radius-field);
+    font-size:14px;color:var(--ink);background:#fff;transition:border-color .15s;
+  }
+  input::placeholder{color:#a3aac2;}
+  input:focus{outline:none;border-color:var(--blue);}
+
+  .pickup-note-box{
+    display:flex; gap:10px; background:var(--neutral-50); border:1px solid var(--neutral-200);
+    border-radius:var(--radius-field); padding:14px; font-size:12.5px; color:var(--ink-soft); line-height:1.5;
+  }
+  .pickup-note-box svg{flex-shrink:0; color:var(--blue); margin-top:1px;}
+
+  .pay-btn{
+    width:100%;background:linear-gradient(180deg,var(--blue),var(--blue-dark));color:#fff;font-weight:800;font-size:15px;
+    padding:16px;border-radius:999px;box-shadow:0 10px 22px -8px rgba(11,30,61,.35);
+    display:flex;align-items:center;justify-content:center;gap:9px;margin-top:4px;
+    transition:filter 180ms ease, transform 180ms ease;
+  }
+  .pay-btn:hover{filter:brightness(1.06);}
+  .pay-btn:active{transform:scale(.98);}
+  .pay-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+  .pay-status{margin-top:12px;font-size:12.5px;text-align:center;color:var(--text-soft);opacity:0;transition:opacity .2s;}
+  .pay-status.show{opacity:1;}
+  .pay-status.error{color:var(--danger);font-weight:600;}
+
+  .unpriced-note{display:none;font-size:12px;color:var(--danger);text-align:center;margin-top:10px;}
+
+  .checkout-footer{text-align:center;margin-top:18px;}
+  .checkout-footer .secure-line{display:flex;align-items:center;justify-content:center;gap:5px;font-size:11.5px;color:var(--text-soft);margin-bottom:10px;}
+  .checkout-footer .secure-line svg{width:13px;height:13px;color:var(--green);}
+  .checkout-footer .secure-line b{color:var(--blue);font-weight:700;}
+  .checkout-footer .links a{color:inherit;}
+  .checkout-footer a.back-link{display:inline-block;margin-top:6px;font-size:12.5px;color:var(--text-soft);text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header>
+    <div class="header-inner">
+      <div class="logo-word">RitaCell</div>
+      <div class="secure-tag">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5l-8-3Z"/><path d="M8.5 12.3l2.3 2.3 4.7-5.1"/></svg>
+        Checkout seguro
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- RESUMO DO PEDIDO -->
+    <div class="co-card" id="coSummaryCard">
+      <div class="co-label">Resumo do pedido</div>
+      <div id="coItems"></div>
+      <div class="os-totals">
+        <div class="row"><span>Subtotal</span><span id="osSubtotal">R$ 0,00</span></div>
+        <div class="row pickup"><span>Retirada</span><span>Grátis — retire na loja</span></div>
+        <div class="row total"><span>Total</span><span id="osTotal">R$ 0,00</span></div>
+      </div>
+      <div class="os-pay-icons">
+        <span class="pay-badge">PIX</span>
+        <span class="pay-badge">VISA</span>
+        <span class="pay-badge">MASTER</span>
+      </div>
+      <div class="os-secure-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+        Pagamento seguro processado pela <b>InfinitePay</b>
+      </div>
+    </div>
+
+    <p class="co-empty" id="coEmpty">
+      Seu carrinho está vazio.<br>
+      <a href="produtos.html">Voltar para o catálogo</a>
+    </p>
+
+    <!-- DADOS DO CLIENTE -->
+    <div class="co-card">
+      <div class="co-label">Seus dados</div>
+      <div class="field">
+        <label for="fullname">Nome completo <span class="req">*</span></label>
+        <input type="text" id="fullname" placeholder="Seu nome" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="email">E-mail <span class="req">*</span></label>
+        <input type="email" id="email" placeholder="voce@exemplo.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="phone">WhatsApp <span class="req">*</span></label>
+        <input type="tel" id="phone" placeholder="(11) 9XXXX-XXXX" autocomplete="tel">
+      </div>
+    </div>
+
+    <!-- RETIRADA NA LOJA -->
+    <div class="co-card">
+      <div class="co-label">Retirada</div>
+      <div class="pickup-note-box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-4v-6H8v6H4a1 1 0 0 1-1-1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <span>Seu pedido fica pronto para retirada na RitaCell — Av. Miguel Estefno, 2015, Vila da Saúde, São Paulo. Avisamos por WhatsApp assim que estiver disponível.</span>
+      </div>
+    </div>
+
+    <button class="pay-btn" id="payBtn" type="button" disabled>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span id="payBtnLabel">Pagar</span>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+    <p class="pay-status" id="payStatus"></p>
+    <p class="unpriced-note" id="unpricedNote">Um dos itens do carrinho ainda não tem preço definido — fale com a gente pelo WhatsApp para fechar esse pedido.</p>
+
+    <div class="checkout-footer">
+      <div class="secure-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5l-8-3Z"/><path d="M8.5 12.3l2.3 2.3 4.7-5.1"/></svg>
+        Pagamento processado com segurança pela <b>InfinitePay</b>
+      </div>
+      <a class="back-link" href="produtos.html">← Voltar para o catálogo</a>
+    </div>
+
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-public-client.js"></script>
+<script src="products-data.js"></script>
+<script src="data-loader.js"></script>
+<script src="cart.js"></script>
+<script src="checkout.js"></script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RitaCell Comércio — Assistência Técnica e Acessórios para Celular</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ElectronicsStore",
+  "name": "RitaCell Comércio",
+  "image": "assets/ritacell-fachada.jpg",
+  "telephone": "+5511953672504",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Av. Miguel Estefno, 2015",
+    "addressLocality": "São Paulo",
+    "addressRegion": "SP",
+    "postalCode": "04301-001",
+    "addressCountry": "BR"
+  },
+  "openingHours": ["Mo-Fr 08:00-19:00", "Sa 08:00-14:00"],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "reviewCount": "12"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<div class="topbar">
+<div class="wrap topbar-inner">
+<span>Retire na loja</span><span class="topbar-dot">•</span><span>Atendimento via WhatsApp</span><span class="topbar-dot topbar-fade">•</span><span class="topbar-fade">Assistência técnica especializada</span>
+</div>
+</div>
+<header class="site-header" id="siteHeader">
+<div class="wrap header-inner">
+<a class="brand" href="index.html">
+<img alt="RitaCell" class="brand-mark" src="assets/ritacell-logo.png"/>
+</a>
+<nav aria-label="Navegação principal" class="main-nav">
+<a href="index.html">Início</a>
+<a href="produtos.html">Produtos</a>
+<a href="assistencia.html">Assistência Técnica</a>
+</nav>
+<div class="header-actions">
+<button aria-label="Abrir carrinho" class="cart-trigger cart-icon-btn" id="cartToggle" type="button">
+<span class="cart-icon-wrap">
+<svg fill="none" height="19" viewBox="0 0 24 24" width="19"><path d="M3 4h2l2.2 12.2a2 2 0 0 0 2 1.8h8.2a2 2 0 0 0 2-1.6L21.4 8H6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path><circle cx="10" cy="21" fill="currentColor" r="1.3"></circle><circle cx="18" cy="21" fill="currentColor" r="1.3"></circle></svg>
+</span>
+<span class="cart-label">Carrinho</span>
+<span class="cart-badge hidden" id="cartCount">0</span>
+</button>
+<button aria-expanded="false" aria-label="Abrir menu" class="nav-toggle" id="navToggle" type="button">
+<svg fill="none" height="20" viewBox="0 0 24 24" width="20"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+<div class="mobile-nav" id="mobileNav">
+<ul>
+<li><a data-close="" href="index.html">Início</a></li>
+<li><a data-close="" href="produtos.html">Produtos</a></li>
+<li><a data-close="" href="assistencia.html">Assistência Técnica</a></li>
+</ul>
+</div>
+</header>
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+<div class="wrap hero-grid">
+<div class="reveal">
+<h1>Tudo para o seu celular.<br/><span class="accent">E uma loja em quem você pode confiar.</span></h1>
+<p class="sub">Acessórios, proteção e assistência técnica com atendimento de verdade — na loja física ou pelo site.</p>
+<div class="hero-ctas">
+<a class="btn btn-primary" href="produtos.html">Ver produtos</a>
+<a class="btn btn-outline" href="assistencia.html">Preciso de assistência</a>
+</div>
+<div class="hero-tags">
+<span class="hero-tag">
+<svg fill="none" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C8 2 5 5 5 9c0 6 7 13 7 13s7-7 7-13c0-4-3-7-7-7z" stroke="currentColor" stroke-width="2"></path><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="2"></circle></svg>
+          Loja física
+        </span>
+<span class="hero-tag">
+<svg fill="none" height="16" viewBox="0 0 24 24" width="16"><path d="M14 4l6 6-8 8H6v-6l8-8z" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path></svg>
+          Assistência técnica
+        </span>
+<span class="hero-tag">
+<svg fill="none" height="16" viewBox="0 0 24 24" width="16"><rect height="20" rx="2" stroke="currentColor" stroke-width="2" width="10" x="7" y="2"></rect></svg>
+          Acessórios
+        </span>
+</div>
+</div>
+</div>
+</section>
+<!-- ===================== CATEGORIAS ===================== -->
+<section class="section section-alt">
+<div class="wrap">
+<div class="section-head reveal">
+<p class="eyebrow">Catálogo</p>
+<h2>Encontre o que você precisa</h2>
+</div>
+<div class="cat-carousel reveal" id="catCarousel">
+<a class="cat-card-v2" href="produtos.html?cat=capinhas">
+<div class="cat-card-v2-media">
+<img alt="Capinhas" draggable="false" loading="lazy" src="assets/categories/capinhas.jpg"/>
+</div>
+<span class="cat-card-v2-label">Capinhas</span>
+</a>
+<a class="cat-card-v2" href="produtos.html?cat=peliculas">
+<div class="cat-card-v2-media">
+<img alt="Películas" draggable="false" loading="lazy" src="assets/categories/peliculas.jpg"/>
+</div>
+<span class="cat-card-v2-label">Películas</span>
+</a>
+<a class="cat-card-v2" href="produtos.html?cat=carregadores">
+<div class="cat-card-v2-media">
+<img alt="Carregadores" draggable="false" loading="lazy" src="assets/categories/carregadores.jpg"/>
+</div>
+<span class="cat-card-v2-label">Carregadores</span>
+</a>
+<a class="cat-card-v2" href="produtos.html?cat=cabos">
+<div class="cat-card-v2-media">
+<img alt="Cabos" draggable="false" loading="lazy" src="assets/categories/cabos.jpg"/>
+</div>
+<span class="cat-card-v2-label">Cabos</span>
+</a>
+<a class="cat-card-v2" href="produtos.html?cat=fones">
+<div class="cat-card-v2-media">
+<img alt="Fones" draggable="false" loading="lazy" src="assets/categories/fones.jpg"/>
+</div>
+<span class="cat-card-v2-label">Fones</span>
+</a>
+<a class="cat-card-v2" href="produtos.html">
+<div class="cat-card-v2-media">
+<img alt="Outros acessórios" draggable="false" loading="lazy" src="assets/categories/outros.jpg"/>
+</div>
+<span class="cat-card-v2-label">Outros acessórios</span>
+</a>
+</div>
+<div class="cat-carousel-dots" id="catCarouselDots"></div>
+</div>
+</section>
+<!-- ===================== MAIS VENDIDOS ===================== -->
+<section class="section">
+<div class="wrap">
+<div class="section-head reveal">
+<p class="eyebrow">Destaques</p>
+<h2>Os queridinhos da RitaCell</h2>
+<p class="lead">Produtos de exemplo — a lista real entra assim que o catálogo completo for cadastrado.</p>
+</div>
+<div class="pgrid reveal" id="bestSellersGrid"></div>
+<div class="hero-ctas reveal" style="margin-top:28px;">
+<a class="btn btn-outline" href="produtos.html">Ver todos os produtos</a>
+</div>
+</div>
+</section>
+<!-- ===================== ASSISTÊNCIA — CHAMADA ===================== -->
+<section class="section section-alt" id="assistencia">
+<div class="wrap">
+<div class="final-cta reveal" style="background:linear-gradient(135deg, var(--blue-dark), var(--blue));">
+<h2>Deu problema no celular?</h2>
+<p>Tela quebrada, bateria, carregamento ou outro defeito? Conte para a RitaCell o que aconteceu e solicite uma avaliação.</p>
+<div class="hero-ctas">
+<a class="btn btn-gold" href="assistencia.html">Solicitar assistência</a>
+</div>
+</div>
+</div>
+</section>
+<!-- ===================== POR QUE ESCOLHER ===================== -->
+<section class="section">
+<div class="wrap">
+<div class="section-head reveal">
+<p class="eyebrow">Por que a RitaCell</p>
+<h2>O que muda quando você compra ou conserta aqui</h2>
+</div>
+<div class="why-grid reveal">
+<div class="why-item">
+<div class="why-icon"><svg fill="none" height="20" viewBox="0 0 24 24" width="20"><path d="M8 12l3 3 5-6" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="1.6"></circle></svg></div>
+<div><h4>Atendimento humano</h4><p>Você conversa com pessoas, não com respostas automáticas.</p></div>
+</div>
+<div class="why-item">
+<div class="why-icon"><svg fill="none" height="20" viewBox="0 0 24 24" width="20"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z" stroke="#fff" stroke-linejoin="round" stroke-width="1.6"></path></svg></div>
+<div><h4>Orientação antes da venda</h4><p>A indicação leva em conta a sua necessidade real.</p></div>
+</div>
+<div class="why-item">
+<div class="why-icon"><svg fill="none" height="20" viewBox="0 0 24 24" width="20"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-4v-6H8v6H4a1 1 0 0 1-1-1z" stroke="#fff" stroke-linejoin="round" stroke-width="1.6"></path></svg></div>
+<div><h4>Loja física</h4><p>Você sabe onde encontrar a RitaCell, sempre que precisar.</p></div>
+</div>
+<div class="why-item">
+<div class="why-icon"><svg fill="none" height="20" viewBox="0 0 24 24" width="20"><rect height="16" rx="3" stroke="#fff" stroke-width="1.6" width="16" x="4" y="4"></rect><path d="M8 12h8" stroke="#fff" stroke-width="1.6"></path></svg></div>
+<div><h4>Transparência</h4><p>Serviços e produtos são explicados antes da decisão.</p></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ===================== AVALIAÇÕES ===================== -->
+<section class="section section-alt" id="avaliacoes">
+<div class="wrap">
+<div class="section-head reveal">
+<p class="eyebrow">Avaliações de clientes</p>
+<h2>O que dizem sobre a RitaCell</h2>
+</div>
+<div class="reviews-card reveal">
+<div class="reviews-score-block">
+<div class="reviews-score">5,0</div>
+<div class="reviews-stars">★★★★★</div>
+<div class="reviews-count">12 avaliações</div>
+</div>
+<div class="reviews-breakdown">
+<div class="breakdown-row">
+<span class="breakdown-label">Excelente</span>
+<span class="breakdown-track"><span class="breakdown-fill" style="width:100%;"></span></span>
+<span class="breakdown-pct">100%</span>
+</div>
+<div class="breakdown-row">
+<span class="breakdown-label">Muito bom</span>
+<span class="breakdown-track"><span class="breakdown-fill" style="width:0%;"></span></span>
+<span class="breakdown-pct">0%</span>
+</div>
+<div class="breakdown-row">
+<span class="breakdown-label">Médio</span>
+<span class="breakdown-track"><span class="breakdown-fill" style="width:0%;"></span></span>
+<span class="breakdown-pct">0%</span>
+</div>
+<div class="breakdown-row">
+<span class="breakdown-label">Ruim</span>
+<span class="breakdown-track"><span class="breakdown-fill" style="width:0%;"></span></span>
+<span class="breakdown-pct">0%</span>
+</div>
+</div>
+</div>
+<div class="testi-grid reveal">
+<div class="testi-card">
+<div class="testi-stars">★★★★★</div>
+<p class="quote">"Loja é organizada, tem ótimos preços e ainda oferecem garantia. Com certeza voltarei e recomendo para quem procura qualidade."</p>
+<p class="testi-name">Lucas Leite</p>
+</div>
+<div class="testi-card">
+<div class="testi-stars">★★★★★</div>
+<p class="quote">"Atendimento excelente, conseguiu resolver um problema que ninguém conseguia."</p>
+<p class="testi-name">Daniel Almeida</p>
+</div>
+<div class="testi-card">
+<div class="testi-stars">★★★★★</div>
+<p class="quote">"Sempre fui muito bem atendida! Educação e profissionalismo total. Assistência perfeita, renovou meu celular."</p>
+<p class="testi-name">Vitória Cedro</p>
+</div>
+</div>
+<div class="hero-ctas reveal" style="margin-top:24px;">
+<a class="btn btn-outline" href="https://share.google/CrgWKIW8nuHYpSghN" rel="noopener" target="_blank">Ver avaliações no Google</a>
+</div>
+</div>
+</section>
+<!-- ===================== SOBRE + LOJA FÍSICA ===================== -->
+<section class="section" id="sobre">
+<div class="wrap about-block">
+<div class="about-text reveal">
+<p class="eyebrow">Também estamos perto de você</p>
+<h2 style="font-size:1.7rem; margin-bottom:16px;">Orientação clara, atendimento próximo e confiança.</h2>
+<p>A RitaCell nasceu para oferecer algo simples que muitas vezes falta no mercado de celulares: orientação clara, atendimento próximo e confiança.</p>
+<p>Somos uma loja física especializada em acessórios e assistência técnica, atendendo clientes que procuram soluções para proteger, manter e aproveitar melhor seus smartphones.</p>
+</div>
+<div class="about-visual reveal">
+<img alt="Fachada da loja RitaCell, com letreiro azul e amarelo" loading="lazy" src="assets/ritacell-fachada.jpg"/>
+</div>
+</div>
+</section>
+<!-- ===================== LOCALIZAÇÃO ===================== -->
+<section class="section" id="contato">
+<div class="wrap">
+<div class="section-head reveal">
+<p class="eyebrow">Onde estamos</p>
+<h2>Venha até a loja ou fale antes pelo WhatsApp</h2>
+</div>
+<div class="location-grid reveal">
+<div class="location-info">
+<div class="location-row">
+<div class="location-icon"><svg fill="none" height="18" viewBox="0 0 24 24" width="18"><path d="M12 2C8 2 5 5 5 9c0 6 7 13 7 13s7-7 7-13c0-4-3-7-7-7z" stroke="currentColor" stroke-width="1.8"></path></svg></div>
+<div><h4>Endereço</h4><p>Av. Miguel Estefno, 2015 — Vila da Saúde, São Paulo - SP, 04301-001</p></div>
+</div>
+<div class="location-row">
+<div class="location-icon"><svg fill="none" height="18" viewBox="0 0 24 24" width="18"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"></circle><path d="M12 7v5l3 2" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg></div>
+<div><h4>Horário de funcionamento</h4><p>Segunda a sexta, 8h às 19h · Sábado, 8h às 14h</p></div>
+</div>
+<div class="location-row">
+<div class="location-icon"><svg fill="none" height="18" viewBox="0 0 24 24" width="18"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.99.36 1.96.68 2.9a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.18-1.25a2 2 0 0 1 2.11-.45c.94.32 1.91.55 2.9.68A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.8"></path></svg></div>
+<div><h4>Telefone</h4><p>(11) 95367-2504</p></div>
+</div>
+<div class="location-row">
+<div class="location-icon"><svg fill="none" height="18" viewBox="0 0 24 24" width="18"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 20l1-5.4A8.5 8.5 0 1 1 21 11.5z" stroke="currentColor" stroke-width="1.8"></path></svg></div>
+<div><h4>WhatsApp</h4><p><a href="https://wa.me/5511953672504" rel="noopener" style="color:var(--blue); font-weight:700;" target="_blank">wa.me/5511953672504</a></p></div>
+</div>
+<a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Av.+Miguel+Estefno%2C+2015+-+Vila+da+Sa%C3%BAde%2C+S%C3%A3o+Paulo+-+SP%2C+04301-001" rel="noopener" style="margin-top:8px; align-self:flex-start;" target="_blank">Como chegar</a>
+</div>
+<div class="map-embed">
+<iframe allowfullscreen="" height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Av.+Miguel+Estefno,+2015+-+Vila+da+Sa%C3%BAde,+S%C3%A3o+Paulo+-+SP,+04301-001&amp;output=embed" style="border:0;" title="Localização da RitaCell no mapa" width="100%"></iframe>
+</div>
+</div>
+</div>
+</section>
+<!-- ===================== CTA FINAL ===================== -->
+<section class="section" style="padding-top:0;">
+<div class="wrap">
+<div class="final-cta reveal">
+<h2>Pronto para resolver seu celular?</h2>
+<p>Fale agora com a RitaCell e receba orientação antes de qualquer decisão.</p>
+<div class="hero-ctas">
+<a class="btn btn-gold" href="https://wa.me/5511953672504?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20RitaCell%20e%20gostaria%20de%20falar%20com%20voc%C3%AAs." rel="noopener" target="_blank">Falar com a RitaCell</a>
+<a class="btn btn-outline-light" href="assistencia.html">Ver assistência técnica</a>
+</div>
+</div>
+</div>
+</section>
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+<div class="wrap footer-grid">
+<div class="footer-brand">
+<div class="brand" style="margin-bottom:14px;"><img alt="RitaCell" class="brand-mark-footer" src="assets/ritacell-logo.png"/></div>
+<p>RitaCell Comércio — acessórios para celular e assistência técnica, com atendimento de confiança.</p>
+</div>
+<div>
+<h4>Navegação</h4>
+<ul>
+<li><a href="index.html">Início</a></li>
+<li><a href="produtos.html">Produtos</a></li>
+<li><a href="assistencia.html">Assistência</a></li>
+<li><a href="index.html#contato">Contato</a></li>
+</ul>
+</div>
+<div>
+<h4>Atendimento</h4>
+<ul>
+<li><a href="https://wa.me/5511953672504" rel="noopener" target="_blank">WhatsApp</a></li>
+<li><a href="tel:+5511953672504">(11) 95367-2504</a></li>
+<li><span style="color:var(--gold); font-family:var(--font-mono); font-size:0.8rem;">Seg-sex 8h-19h · Sáb 8h-14h</span></li>
+</ul>
+</div>
+<div>
+<h4>Redes</h4>
+<ul>
+<li><a href="https://www.instagram.com/ritaacell/" rel="noopener" target="_blank">Instagram</a></li>
+<li><button aria-disabled="true" disabled="" type="button">Facebook [link a definir]</button></li>
+<li><button aria-disabled="true" disabled="" type="button">Google Perfil da Empresa [link a definir]</button></li>
+</ul>
+</div>
+</div>
+<div class="wrap footer-bottom">
+<span>© <span class="js-year"></span> RitaCell Comércio. Todos os direitos reservados.</span>
+<span>[CNPJ / dados empresariais a definir]</span>
+</div>
+</footer>
+
+
+<div class="overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-label="Carrinho de compras">
+  <div class="cart-drawer-header">
+    <h3>Seu carrinho</h3>
+    <button class="cart-close-btn" id="cartClose" aria-label="Fechar carrinho">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-drawer-footer">
+    <div class="cart-total-row"><span>Subtotal</span><span id="cartTotal">R$ 0,00</span></div>
+    <button class="btn btn-primary btn-block" id="cartCheckoutBtn" disabled>Finalizar compra</button>
+    <p class="cart-integration-note">Pix e cartão via InfinitePay · Retirada disponível na loja</p>
+  </div>
+</aside>
+
+<!-- ===================== WHATSAPP FLUTUANTE ===================== -->
+<a class="wa-float" href="https://wa.me/5511953672504?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20RitaCell%20e%20gostaria%20de%20falar%20com%20voc%C3%AAs." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4C7.28 4 3.4 7.88 3.4 12.65c0 1.53.4 3.02 1.16 4.34L3.36 21l4.12-1.08a8.94 8.94 0 0 0 4.57 1.25h.01c4.77 0 8.65-3.88 8.65-8.65a8.6 8.6 0 0 0-2.11-6.2zM12.06 19.7a7.2 7.2 0 0 1-3.67-1.01l-.26-.16-2.72.71.73-2.65-.17-.27a7.14 7.14 0 0 1-1.1-3.8c0-3.95 3.22-7.17 7.19-7.17a7.15 7.15 0 0 1 7.16 7.17c0 3.96-3.22 7.18-7.16 7.18zm3.94-5.37c-.22-.11-1.28-.63-1.48-.7-.2-.07-.34-.11-.49.11-.14.22-.56.7-.69.84-.13.14-.25.16-.47.05-.22-.11-.93-.34-1.77-1.08-.65-.58-1.09-1.3-1.22-1.52-.13-.22-.01-.34.1-.45.1-.1.22-.25.33-.38.11-.13.15-.22.22-.36.07-.14.04-.27-.02-.38-.06-.11-.49-1.18-.68-1.62-.18-.43-.36-.37-.49-.38-.13-.01-.27-.01-.42-.01-.14 0-.38.05-.58.27-.2.22-.76.74-.76 1.8s.78 2.09.89 2.24c.11.14 1.53 2.34 3.72 3.28.52.22.92.36 1.24.46.52.16.99.14 1.36.09.42-.06 1.28-.52 1.46-1.03.18-.5.18-.94.13-1.03-.05-.09-.2-.14-.42-.25z"/></svg>
+</a>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-public-client.js"></script>
+<script src="products-data.js"></script>
+<script src="data-loader.js"></script>
+<script src="cart.js"></script>
+<script src="script.js"></script>
+<script src="home.js"></script>
+</body>
+</html>

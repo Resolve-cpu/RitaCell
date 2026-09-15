@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Solicitar orçamento — Assistência técnica RitaCell</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="topbar">
+<div class="wrap topbar-inner">
+<span>Retire na loja</span><span class="topbar-dot">•</span><span>Atendimento via WhatsApp</span><span class="topbar-dot topbar-fade">•</span><span class="topbar-fade">Assistência técnica especializada</span>
+</div>
+</div>
+<header class="site-header" id="siteHeader">
+<div class="wrap header-inner">
+<a class="brand" href="index.html">
+<img alt="RitaCell" class="brand-mark" src="assets/ritacell-logo.png"/>
+</a>
+<nav aria-label="Navegação principal" class="main-nav">
+<a href="index.html">Início</a>
+<a href="produtos.html">Produtos</a>
+<a href="assistencia.html">Assistência Técnica</a>
+</nav>
+<div class="header-actions">
+<button aria-label="Abrir carrinho" class="cart-trigger cart-icon-btn" id="cartToggle" type="button">
+<span class="cart-icon-wrap">
+<svg fill="none" height="19" viewBox="0 0 24 24" width="19"><path d="M3 4h2l2.2 12.2a2 2 0 0 0 2 1.8h8.2a2 2 0 0 0 2-1.6L21.4 8H6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path><circle cx="10" cy="21" fill="currentColor" r="1.3"></circle><circle cx="18" cy="21" fill="currentColor" r="1.3"></circle></svg>
+</span>
+<span class="cart-label">Carrinho</span>
+<span class="cart-badge hidden" id="cartCount">0</span>
+</button>
+<button aria-expanded="false" aria-label="Abrir menu" class="nav-toggle" id="navToggle" type="button">
+<svg fill="none" height="20" viewBox="0 0 24 24" width="20"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+<div class="mobile-nav" id="mobileNav">
+<ul>
+<li><a data-close="" href="index.html">Início</a></li>
+<li><a data-close="" href="produtos.html">Produtos</a></li>
+<li><a data-close="" href="assistencia.html">Assistência Técnica</a></li>
+</ul>
+</div>
+</header>
+<div class="wrap breadcrumb">
+<a href="index.html">Início</a> / <span class="current">Assistência técnica</span>
+</div>
+<section class="section" style="padding-top:22px;">
+<div class="wrap">
+<div class="section-head reveal">
+<p class="eyebrow">Assistência técnica</p>
+<h2>Conte o que aconteceu com seu celular.</h2>
+<p class="lead">Responda algumas perguntas rápidas — leva menos de um minuto — e a gente já prepara o pedido de orçamento pelo WhatsApp. Sem preço fixo, porque cada aparelho é avaliado individualmente.</p>
+</div>
+<div class="flow-card reveal">
+<div class="flow-progress">
+<span class="done" id="prog1"></span>
+<span id="prog2"></span>
+<span id="prog3"></span>
+<span id="prog4"></span>
+</div>
+<!-- Etapa 1 -->
+<div class="flow-step active" id="step1">
+<h3>O que aconteceu com seu celular?</h3>
+<div class="option-grid" id="motivoGrid">
+<button class="option-btn" data-motivo="Tela quebrada">Tela quebrada</button>
+<button class="option-btn" data-motivo="Bateria">Bateria</button>
+<button class="option-btn" data-motivo="Não carrega">Não carrega</button>
+<button class="option-btn" data-motivo="Não liga">Não liga</button>
+<button class="option-btn" data-motivo="Câmera">Câmera</button>
+<button class="option-btn" data-motivo="Áudio">Áudio</button>
+<button class="option-btn" data-motivo="Outro">Outro</button>
+</div>
+<div class="flow-nav">
+<span></span>
+<button class="btn btn-primary" disabled="" id="toStep2">Continuar</button>
+</div>
+</div>
+<!-- Etapa 2 -->
+<div class="flow-step" id="step2">
+<h3>Qual é o seu aparelho?</h3>
+<div class="field-group">
+<label for="marca">Marca</label>
+<input id="marca" placeholder="Ex.: Apple, Samsung, Motorola" type="text"/>
+</div>
+<div class="field-group">
+<label for="modelo">Modelo</label>
+<input id="modelo" placeholder="Ex.: iPhone 13, Galaxy A15" type="text"/>
+</div>
+<div class="flow-nav">
+<button class="btn btn-outline" id="toStep1Back">Voltar</button>
+<button class="btn btn-primary" id="toStep3">Continuar</button>
+</div>
+</div>
+<!-- Etapa 3 -->
+<div class="flow-step" id="step3">
+<h3>Conte mais detalhes (opcional)</h3>
+<div class="field-group">
+<label for="detalhes">O que você percebeu no aparelho?</label>
+<textarea id="detalhes" placeholder="Ex.: caiu no chão, a tela ficou com listras, a bateria dura pouco..." rows="4" style="width:100%; padding:13px 14px; border-radius:10px; border:1.5px solid var(--neutral-200); font-family:inherit; font-size:0.94rem; resize:vertical;"></textarea>
+</div>
+<div class="flow-nav">
+<button class="btn btn-outline" id="toStep2Back">Voltar</button>
+<button class="btn btn-primary" id="toStep4">Continuar</button>
+</div>
+</div>
+<!-- Etapa 4 -->
+<div class="flow-step" id="step4">
+<h3>Confirme e solicite o orçamento</h3>
+<div class="flow-summary" id="summaryBox"></div>
+<div class="field-group">
+<label for="nomeCliente">Seu nome (opcional)</label>
+<input id="nomeCliente" placeholder="Como podemos te chamar?" type="text"/>
+</div>
+<div class="flow-nav">
+<button class="btn btn-outline" id="toStep3Back">Voltar</button>
+<button aria-disabled="true" class="btn btn-primary" disabled="" id="sendBtn" type="button">Solicitar orçamento pelo WhatsApp</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<footer class="site-footer">
+<div class="wrap footer-grid">
+<div class="footer-brand">
+<div class="brand" style="margin-bottom:14px;"><img alt="RitaCell" class="brand-mark-footer" src="assets/ritacell-logo.png"/></div>
+<p>RitaCell Comércio — acessórios para celular e assistência técnica, com atendimento de confiança.</p>
+</div>
+<div>
+<h4>Navegação</h4>
+<ul>
+<li><a href="index.html">Início</a></li>
+<li><a href="assistencia.html">Assistência</a></li>
+<li><a href="produtos.html">Produtos</a></li>
+</ul>
+</div>
+<div>
+<h4>Contato</h4>
+<ul>
+<li><a href="tel:+5511953672504">(11) 95367-2504</a></li>
+<li><a href="https://wa.me/5511953672504" rel="noopener" target="_blank">WhatsApp</a></li>
+</ul>
+</div>
+</div>
+<div class="wrap footer-bottom">
+<span>© <span class="js-year"></span> RitaCell Comércio. Todos os direitos reservados.</span>
+</div>
+</footer>
+
+<div class="overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-label="Carrinho de compras">
+  <div class="cart-drawer-header">
+    <h3>Seu carrinho</h3>
+    <button class="cart-close-btn" id="cartClose" aria-label="Fechar carrinho">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-drawer-footer">
+    <div class="cart-total-row"><span>Subtotal</span><span id="cartTotal">R$ 0,00</span></div>
+    <button class="btn btn-primary btn-block" id="cartCheckoutBtn" disabled>Finalizar compra</button>
+    <p class="cart-integration-note">Pix e cartão via InfinitePay · Retirada disponível na loja</p>
+  </div>
+</aside>
+
+<!-- ===================== WHATSAPP FLUTUANTE ===================== -->
+<a class="wa-float" href="https://wa.me/5511953672504?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20RitaCell%20e%20gostaria%20de%20falar%20com%20voc%C3%AAs." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4C7.28 4 3.4 7.88 3.4 12.65c0 1.53.4 3.02 1.16 4.34L3.36 21l4.12-1.08a8.94 8.94 0 0 0 4.57 1.25h.01c4.77 0 8.65-3.88 8.65-8.65a8.6 8.6 0 0 0-2.11-6.2zM12.06 19.7a7.2 7.2 0 0 1-3.67-1.01l-.26-.16-2.72.71.73-2.65-.17-.27a7.14 7.14 0 0 1-1.1-3.8c0-3.95 3.22-7.17 7.19-7.17a7.15 7.15 0 0 1 7.16 7.17c0 3.96-3.22 7.18-7.16 7.18zm3.94-5.37c-.22-.11-1.28-.63-1.48-.7-.2-.07-.34-.11-.49.11-.14.22-.56.7-.69.84-.13.14-.25.16-.47.05-.22-.11-.93-.34-1.77-1.08-.65-.58-1.09-1.3-1.22-1.52-.13-.22-.01-.34.1-.45.1-.1.22-.25.33-.38.11-.13.15-.22.22-.36.07-.14.04-.27-.02-.38-.06-.11-.49-1.18-.68-1.62-.18-.43-.36-.37-.49-.38-.13-.01-.27-.01-.42-.01-.14 0-.38.05-.58.27-.2.22-.76.74-.76 1.8s.78 2.09.89 2.24c.11.14 1.53 2.34 3.72 3.28.52.22.92.36 1.24.46.52.16.99.14 1.36.09.42-.06 1.28-.52 1.46-1.03.18-.5.18-.94.13-1.03-.05-.09-.2-.14-.42-.25z"/></svg>
+</a>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-public-client.js"></script>
+<script src="products-data.js"></script>
+<script src="data-loader.js"></script>
+<script src="cart.js"></script>
+<script src="script.js"></script>
+<script src="assistencia.js"></script>
+</body>
+</html>

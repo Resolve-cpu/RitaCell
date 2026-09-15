@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Painel — RitaCell</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <img src="../assets/ritacell-logo.png" alt="RitaCell" />
+    <nav>
+      <button type="button" class="active">Produtos</button>
+    </nav>
+    <button type="button" class="logout-btn" id="logoutBtn">Sair</button>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <div>
+        <h1>Produtos</h1>
+        <p>Cadastre, edite e controle o que aparece no site.</p>
+      </div>
+      <button type="button" class="btn btn-primary" id="newProductBtn" style="width:auto;">+ Novo produto</button>
+    </div>
+
+    <div class="products-toolbar">
+      <input type="text" id="searchInput" placeholder="Buscar produto..." />
+    </div>
+
+    <div class="products-table-wrap">
+      <table class="products-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Preço</th>
+            <th>Estoque</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="productsTableBody">
+          <tr><td colspan="7" class="empty-state">Carregando produtos...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- ===================== MODAL DE PRODUTO ===================== -->
+<div class="modal-overlay hidden" id="productModalOverlay">
+  <div class="product-modal">
+    <h2 id="modalTitle">Novo produto</h2>
+
+    <div class="form-error" id="formError"></div>
+
+    <form id="productForm">
+      <input type="hidden" id="productId" />
+
+      <div class="form-grid">
+        <div class="field full">
+          <label for="fName">Nome do produto</label>
+          <input type="text" id="fName" required placeholder="Ex.: Capinha de Silicone Anti-impacto" />
+        </div>
+
+        <div class="field">
+          <label for="fCategory">Categoria</label>
+          <select id="fCategory" required>
+            <option value="capinhas">Capinhas</option>
+            <option value="peliculas">Películas</option>
+            <option value="carregadores">Carregadores</option>
+            <option value="cabos">Cabos</option>
+            <option value="fones">Fones</option>
+            <option value="suportes">Suportes</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="fBrand">Marca do produto</label>
+          <input type="text" id="fBrand" placeholder="Ex.: Universal" value="Universal" />
+        </div>
+
+        <div class="field">
+          <label for="fPrice">Preço (R$)</label>
+          <input type="text" id="fPrice" inputmode="decimal" placeholder="Ex.: 39,90 (deixe vazio para 'sob consulta')" />
+        </div>
+
+        <div class="field" id="stockFieldWrap">
+          <label for="fStock">Estoque geral</label>
+          <input type="number" id="fStock" min="0" placeholder="0" />
+        </div>
+
+        <div class="field full">
+          <label for="fDescription">Descrição</label>
+          <textarea id="fDescription" placeholder="Descrição curta do produto"></textarea>
+        </div>
+
+        <div class="field full">
+          <label for="fBenefits">Diferenciais (um por linha)</label>
+          <textarea id="fBenefits" placeholder="Ex.: Reduz risco de trincas na tela&#10;Instalação inclusa"></textarea>
+        </div>
+
+        <div class="field full">
+          <label>Fotos do produto</label>
+          <div class="image-upload-row" id="imageUploadRow">
+            <label class="image-upload-btn">
+              + Adicionar
+              <input type="file" id="imageInput" accept="image/*" multiple style="display:none;" />
+            </label>
+          </div>
+        </div>
+
+        <div class="field full variant-toggle-row">
+          <label class="check-row">
+            <input type="checkbox" id="fHasCompat" />
+            Este produto tem variação por marca e modelo de celular (ex.: capinhas, películas)
+          </label>
+        </div>
+
+        <div class="field full" id="compatNoteWrap" style="display:none;">
+          <label for="fCompatNote">Texto de ajuda acima da seleção</label>
+          <input type="text" id="fCompatNote" placeholder="Ex.: Selecione a marca e o modelo do seu aparelho" />
+        </div>
+
+        <div class="field full" id="variantEditorWrap" style="display:none;">
+          <label>Marcas, modelos e estoque</label>
+          <div class="variant-editor" id="variantEditor"></div>
+          <button type="button" class="add-variant-btn" id="addVariantBtn">+ Adicionar marca/modelo</button>
+        </div>
+
+        <div class="field full">
+          <label for="fCheckoutLink">Link de checkout (InfinitePay) — opcional</label>
+          <input type="text" id="fCheckoutLink" placeholder="Cole aqui quando o link de pagamento individual existir" />
+        </div>
+
+        <div class="field">
+          <label class="check-row"><input type="checkbox" id="fActive" checked /> Produto ativo no site</label>
+        </div>
+        <div class="field">
+          <label class="check-row"><input type="checkbox" id="fFeatured" /> Destaque na Home ("Mais vendidos")</label>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" id="cancelModalBtn">Cancelar</button>
+        <button type="submit" class="btn btn-primary" id="saveProductBtn" style="width:auto;">Salvar produto</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="supabase-client.js"></script>
+<script src="admin-products.js"></script>
+</body>
+</html>

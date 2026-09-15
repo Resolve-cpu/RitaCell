@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Entrar — Painel RitaCell</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<div class="login-screen">
+  <div class="login-card">
+    <img class="login-logo" src="../assets/ritacell-logo.png" alt="RitaCell" />
+    <h1>Painel administrativo</h1>
+    <p class="sub">Acesso restrito à equipe da RitaCell</p>
+
+    <div class="form-error" id="loginError"></div>
+
+    <form id="loginForm">
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" required autocomplete="username" placeholder="seuemail@exemplo.com" />
+      </div>
+      <div class="field">
+        <label for="password">Senha</label>
+        <input type="password" id="password" required autocomplete="current-password" placeholder="••••••••" />
+      </div>
+      <button type="submit" class="btn btn-primary" id="loginBtn">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<script src="supabase-client.js"></script>
+<script>
+if (requireSupabaseConfigured()) {
+  // Se já existe uma sessão válida, pula direto para o painel
+  supabaseClient.auth.getSession().then(({ data }) => {
+    if (data.session) window.location.href = "dashboard.html";
+  });
+
+  const form = document.getElementById("loginForm");
+  const errorBox = document.getElementById("loginError");
+  const loginBtn = document.getElementById("loginBtn");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    errorBox.classList.remove("show");
+    loginBtn.disabled = true;
+    loginBtn.textContent = "Entrando...";
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      errorBox.textContent = "E-mail ou senha incorretos.";
+      errorBox.classList.add("show");
+      loginBtn.disabled = false;
+      loginBtn.textContent = "Entrar";
+      return;
+    }
+
+    window.location.href = "dashboard.html";
+  });
+}
+</script>
+
+</body>
+</html>

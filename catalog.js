@@ -46,8 +46,10 @@ function initProdutosPage() {
   const params = new URLSearchParams(window.location.search);
   const catFromUrl = params.get("cat");
 
-  const all = typeof PRODUCTS !== "undefined" ? PRODUCTS : [];
-  const cats = [...new Set(all.map((p) => p.category))];
+  // Usa a lista fixa de categorias do site (não só as que têm produto
+  // cadastrado agora) — assim um link "Capinhas" sempre filtra por
+  // capinhas de verdade, mesmo que essa categoria esteja vazia no momento.
+  const cats = Object.keys(CATEGORY_LABELS);
   produtosCat = catFromUrl && cats.includes(catFromUrl) ? catFromUrl : "todos";
   produtosQuery = "";
 

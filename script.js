@@ -118,6 +118,23 @@ document.addEventListener("click", function (e) {
     return;
   }
 
+  // Botões do carrinho lateral (aumentar/diminuir quantidade, remover item)
+  const cartMinusBtn = e.target.closest("[data-cart-minus]");
+  if (cartMinusBtn) {
+    changeCartQty(cartMinusBtn.dataset.cartMinus, -1);
+    return;
+  }
+  const cartPlusBtn = e.target.closest("[data-cart-plus]");
+  if (cartPlusBtn) {
+    changeCartQty(cartPlusBtn.dataset.cartPlus, 1);
+    return;
+  }
+  const cartRemoveBtn = e.target.closest("[data-cart-remove]");
+  if (cartRemoveBtn) {
+    removeFromCart(cartRemoveBtn.dataset.cartRemove);
+    return;
+  }
+
   // Cards de produto são montados dinamicamente pelo JS (home/catálogo/relacionados)
   // e usam data-product-id para diferenciar entre "adicionar ao carrinho" (data-add)
   // e "abrir a página do produto" (data-product-id sem data-add).

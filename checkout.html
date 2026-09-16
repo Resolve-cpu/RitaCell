@@ -25,11 +25,11 @@
 
   .page{max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:40px;}
 
-  header{background:var(--blue);padding:16px 18px;position:sticky;top:0;z-index:60;}
+  header{background:#fff;border-bottom:1px solid var(--neutral-200);padding:14px 18px;position:sticky;top:0;z-index:60;}
   .header-inner{display:flex;align-items:center;justify-content:space-between;max-width:480px;margin:0 auto;}
-  .logo-word{font-family:'Manrope',sans-serif;font-weight:800;font-size:18px;color:#fff;}
-  .secure-tag{display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:#fff;opacity:0.9;}
-  .secure-tag svg{width:14px;height:14px;}
+  .logo-mark{height:34px;width:auto;display:block;}
+  .secure-tag{display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:var(--text-soft);}
+  .secure-tag svg{width:14px;height:14px;color:var(--green);}
 
   main{padding:18px 16px 0;}
 
@@ -51,7 +51,7 @@
   .os-totals{margin-top:14px;padding-top:14px;border-top:1px solid var(--neutral-100);}
   .os-totals .row{display:flex;justify-content:space-between;font-size:13.5px;color:var(--text-soft);margin-bottom:10px;}
   .os-totals .row span:last-child{color:var(--ink);font-weight:600;}
-  .os-totals .row.pickup span:last-child{color:var(--green);font-weight:700;}
+  #deliveryRow.free span:last-child{color:var(--green);font-weight:700;}
   .os-totals .row.total{margin-top:4px;padding-top:12px;border-top:1px solid var(--neutral-100);}
   .os-totals .row.total span{font-weight:800;font-size:17px;color:var(--ink);}
 
@@ -81,6 +81,23 @@
   }
   .pickup-note-box svg{flex-shrink:0; color:var(--blue); margin-top:1px;}
 
+  .delivery-toggle{display:flex;gap:8px;margin-bottom:14px;}
+  .delivery-option{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;
+    padding:14px 10px;border:1.5px solid var(--neutral-200);border-radius:12px;
+    font-size:12.5px;font-weight:700;color:var(--ink-soft);background:#fff;
+  }
+  .delivery-option svg{width:20px;height:20px;}
+  .delivery-option.active{border-color:var(--blue);color:var(--blue);background:#eef1fd;}
+  .btn-calc-frete{
+    width:100%;padding:12px;border-radius:999px;border:1.5px solid var(--blue);
+    color:var(--blue);font-weight:700;font-size:13.5px;background:#fff;margin-top:8px;
+  }
+  .btn-calc-frete:disabled{opacity:.5;cursor:not-allowed;}
+  .frete-status{font-size:12.5px;margin-top:10px;text-align:center;}
+  .frete-status.ok{color:var(--green);font-weight:700;}
+  .frete-status.error{color:var(--danger);font-weight:600;}
+
   .pay-btn{
     width:100%;background:linear-gradient(180deg,var(--blue),var(--blue-dark));color:#fff;font-weight:800;font-size:15px;
     padding:16px;border-radius:999px;box-shadow:0 10px 22px -8px rgba(11,30,61,.35);
@@ -109,7 +126,7 @@
 <div class="page">
   <header>
     <div class="header-inner">
-      <div class="logo-word">RitaCell</div>
+      <img class="logo-mark" src="assets/ritacell-logo.png" alt="RitaCell" />
       <div class="secure-tag">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5l-8-3Z"/><path d="M8.5 12.3l2.3 2.3 4.7-5.1"/></svg>
         Checkout seguro
@@ -125,7 +142,7 @@
       <div id="coItems"></div>
       <div class="os-totals">
         <div class="row"><span>Subtotal</span><span id="osSubtotal">R$ 0,00</span></div>
-        <div class="row pickup"><span>Retirada</span><span>Grátis — retire na loja</span></div>
+        <div class="row" id="deliveryRow"><span id="deliveryRowLabel">Retirada</span><span id="deliveryRowValue">Grátis — retire na loja</span></div>
         <div class="row total"><span>Total</span><span id="osTotal">R$ 0,00</span></div>
       </div>
       <div class="os-pay-icons">
@@ -161,12 +178,32 @@
       </div>
     </div>
 
-    <!-- RETIRADA NA LOJA -->
+    <!-- COMO RECEBER -->
     <div class="co-card">
-      <div class="co-label">Retirada</div>
-      <div class="pickup-note-box">
+      <div class="co-label">Como você quer receber?</div>
+      <div class="delivery-toggle">
+        <button type="button" class="delivery-option active" id="modePickupBtn" data-mode="pickup">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-4v-6H8v6H4a1 1 0 0 1-1-1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          Retirar na loja
+        </button>
+        <button type="button" class="delivery-option" id="modeDeliveryBtn" data-mode="delivery">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="6" cy="18" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="18" r="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 18h1V8h8l4 5h3v5h-2M9 8v5h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Receber em casa
+        </button>
+      </div>
+
+      <div id="pickupInfo" class="pickup-note-box">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-4v-6H8v6H4a1 1 0 0 1-1-1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
         <span>Seu pedido fica pronto para retirada na RitaCell — Av. Miguel Estefno, 2015, Vila da Saúde, São Paulo. Avisamos por WhatsApp assim que estiver disponível.</span>
+      </div>
+
+      <div id="deliveryInfo" style="display:none;">
+        <div class="field">
+          <label for="deliveryAddress">Endereço completo (rua, número, bairro)</label>
+          <input type="text" id="deliveryAddress" placeholder="Ex.: Rua Vergueiro, 1000, Vila Mariana">
+        </div>
+        <button type="button" class="btn-calc-frete" id="calcFreteBtn">Calcular frete</button>
+        <p class="frete-status" id="freteStatus"></p>
       </div>
     </div>
 

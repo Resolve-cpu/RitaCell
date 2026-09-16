@@ -2,9 +2,12 @@
 // RitaCell — Checkout
 // =========================================================
 
-// Troque pela URL real da sua Edge Function depois do deploy:
-// https://SEU_PROJETO.supabase.co/functions/v1/create-checkout-link
 const CHECKOUT_FUNCTION_URL = "https://srzwsyxkitntqusoiaho.supabase.co/functions/v1/create-checkout-link";
+const DELIVERY_FUNCTION_URL = "https://srzwsyxkitntqusoiaho.supabase.co/functions/v1/calculate-delivery";
+
+let deliveryMode = "pickup"; // "pickup" | "delivery"
+let deliveryFeeCents = 0;
+let deliveryDistanceKm = null;
 
 function renderCheckoutSummary() {
   const cart = getCart();
@@ -47,17 +50,21 @@ function renderCheckoutSummary() {
     .join("");
 
   const subtotal = cartSubtotal();
+  const total = subtotal + (deliveryMode === "delivery" ? deliveryFeeCents : 0);
+
   document.getElementById("osSubtotal").textContent = money(subtotal);
-  document.getElementById("osTotal").textContent = money(subtotal);
+  document.getElementById("osTotal").textContent = money(total);
+  updateDeliveryRow();
 
   const totalLabel = document.getElementById("payBtnLabel");
-  if (totalLabel) totalLabel.textContent = `Pagar ${money(subtotal)}`;
+  if (totalLabel) totalLabel.textContent = `Pagar ${money(total)}`;
 
   const hasUnpricedItem = cart.some((line) => {
     const p = findProduct(line.id);
     return !p || p.price == null;
   });
-  payBtn.disabled = hasUnpricedItem;
+  const deliveryPending = deliveryMode === "delivery" && deliveryFeeCents === 0;
+  payBtn.disabled = hasUnpricedItem || deliveryPending;
 
   const unpricedNote = document.getElementById("unpricedNote");
   if (unpricedNote) unpricedNote.style.display = hasUnpricedItem ? "block" : "none";
@@ -74,6 +81,99 @@ function renderCheckoutSummary() {
       renderCheckoutSummary();
     })
   );
+}
+
+function updateDeliveryRow() {
+  const row = document.getElementById("deliveryRow");
+  const label = document.getElementById("deliveryRowLabel");
+  const value = document.getElementById("deliveryRowValue");
+
+  if (deliveryMode === "pickup") {
+    row.classList.add("free");
+    label.textContent = "Retirada";
+    value.textContent = "Grátis — retire na loja";
+  } else if (deliveryFeeCents > 0) {
+    row.classList.remove("free");
+    label.textContent = `Entrega (${deliveryDistanceKm} km)`;
+    value.textContent = money(deliveryFeeCents);
+  } else {
+    row.classList.remove("free");
+    label.textContent = "Entrega";
+    value.textContent = "A calcular";
+  }
+}
+
+function setFreteStatus(message, kind) {
+  const el = document.getElementById("freteStatus");
+  el.textContent = message || "";
+  el.classList.toggle("ok", kind === "ok");
+  el.classList.toggle("error", kind === "error");
+}
+
+function setDeliveryMode(mode) {
+  deliveryMode = mode;
+  document.getElementById("modePickupBtn").classList.toggle("active", mode === "pickup");
+  document.getElementById("modeDeliveryBtn").classList.toggle("active", mode === "delivery");
+  document.getElementById("pickupInfo").style.display = mode === "pickup" ? "flex" : "none";
+  document.getElementById("deliveryInfo").style.display = mode === "delivery" ? "block" : "none";
+
+  if (mode === "pickup") {
+    deliveryFeeCents = 0;
+    deliveryDistanceKm = null;
+    setFreteStatus("", null);
+  }
+  renderCheckoutSummary();
+}
+
+async function handleCalcFrete() {
+  const addressInput = document.getElementById("deliveryAddress");
+  const address = addressInput.value.trim();
+  if (address.length < 8) {
+    setFreteStatus("Digite o endereço completo (rua, número e bairro).", "error");
+    return;
+  }
+
+  const btn = document.getElementById("calcFreteBtn");
+  btn.disabled = true;
+  setFreteStatus("Calculando distância até você...", null);
+
+  try {
+    const response = await fetch(DELIVERY_FUNCTION_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + PUBLIC_SUPABASE_ANON_KEY,
+      },
+      body: JSON.stringify({ address }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || data.error) {
+      setFreteStatus(data.error || "Não foi possível calcular o frete agora.", "error");
+      deliveryFeeCents = 0;
+      deliveryDistanceKm = null;
+      renderCheckoutSummary();
+      return;
+    }
+
+    if (!data.deliverable) {
+      setFreteStatus(data.message || "Fora da área de entrega automática.", "error");
+      deliveryFeeCents = 0;
+      deliveryDistanceKm = null;
+      renderCheckoutSummary();
+      return;
+    }
+
+    deliveryFeeCents = data.fee_cents;
+    deliveryDistanceKm = data.distance_km;
+    setFreteStatus(`Entrega de ${data.distance_km} km — ${money(data.fee_cents)}`, "ok");
+    renderCheckoutSummary();
+  } catch (err) {
+    setFreteStatus("Erro de conexão ao calcular o frete. Tente novamente.", "error");
+  } finally {
+    btn.disabled = false;
+  }
 }
 
 function setPayStatus(message, isError) {
@@ -99,6 +199,11 @@ async function handlePaySubmit() {
     return;
   }
 
+  if (deliveryMode === "delivery" && deliveryFeeCents === 0) {
+    setPayStatus("Calcule o frete antes de pagar.", true);
+    return;
+  }
+
   const payBtn = document.getElementById("payBtn");
   payBtn.disabled = true;
   setPayStatus("Gerando seu pagamento...", false);
@@ -114,6 +219,14 @@ async function handlePaySubmit() {
         items: cart.map((l) => ({ id: l.id, qty: l.qty, variation: l.variation })),
         customer: { name, email, phone },
         redirect_url: window.location.origin + "/pedido-confirmado.html",
+        delivery:
+          deliveryMode === "delivery"
+            ? {
+                address: document.getElementById("deliveryAddress").value.trim(),
+                distance_km: deliveryDistanceKm,
+                fee_cents: deliveryFeeCents,
+              }
+            : null,
       }),
     });
 
@@ -135,4 +248,7 @@ async function handlePaySubmit() {
 window.addEventListener("catalog-ready", () => {
   renderCheckoutSummary();
   document.getElementById("payBtn").addEventListener("click", handlePaySubmit);
+  document.getElementById("modePickupBtn").addEventListener("click", () => setDeliveryMode("pickup"));
+  document.getElementById("modeDeliveryBtn").addEventListener("click", () => setDeliveryMode("delivery"));
+  document.getElementById("calcFreteBtn").addEventListener("click", handleCalcFrete);
 });

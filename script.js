@@ -59,6 +59,7 @@ function initCatCarousel(scopeEl) {
   let startX = 0;
   let startScroll = 0;
   let moved = 0;
+  let capturedId = null;
 
   carousel.addEventListener("pointerdown", (e) => {
     if (e.pointerType === "touch") return;
@@ -66,14 +67,27 @@ function initCatCarousel(scopeEl) {
     moved = 0;
     startX = e.clientX;
     startScroll = carousel.scrollLeft;
-    carousel.classList.add("dragging");
-    carousel.setPointerCapture(e.pointerId);
+    capturedId = e.pointerId;
   });
   carousel.addEventListener("pointermove", (e) => {
     if (!isDown) return;
     const dx = e.clientX - startX;
     moved = Math.max(moved, Math.abs(dx));
-    carousel.scrollLeft = startScroll - dx;
+    if (moved > 6) {
+      // só captura o ponteiro (e passa a rolar) depois de confirmar que é
+      // um arraste de verdade — assim um clique simples nunca é "sequestrado"
+      // pelo carrossel, e o link por baixo do dedo/mouse funciona normalmente
+      if (capturedId !== null) {
+        carousel.classList.add("dragging");
+        try {
+          carousel.setPointerCapture(capturedId);
+        } catch (err) {
+          /* ignora se o ponteiro já não existir mais */
+        }
+        capturedId = null;
+      }
+      carousel.scrollLeft = startScroll - dx;
+    }
   });
   function endDrag() {
     if (!isDown) return;

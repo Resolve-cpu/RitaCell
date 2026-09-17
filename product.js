@@ -19,6 +19,10 @@ let selectedModel = null;
 
 let qty = 1;
 
+// Galeria de fotos: qual imagem está sendo exibida como principal
+let activeImageIndex = 0;
+const galleryImages = product.images && product.images.length ? product.images : (product.image ? [product.image] : []);
+
 const pageTitleEl = document.getElementById("pageTitle");
 if (pageTitleEl) pageTitleEl.textContent = `${product.name} — RitaCell Comércio`;
 document.getElementById("breadcrumbName").textContent = product.name;
@@ -168,10 +172,20 @@ function renderProduct() {
   document.getElementById("productDetail").innerHTML = `
     <div class="product-gallery">
       <div class="product-gallery-main">
-        ${productMediaHTML(product, 72)}
+        ${galleryImages.length
+          ? `<img src="${galleryImages[activeImageIndex]}" alt="${product.name}" />`
+          : productMediaHTML(product, 72)}
       </div>
       <div class="product-gallery-thumbs">
-        ${(product.images || []).map(() => `<div class="thumb"></div>`).join("")}
+        ${galleryImages
+          .map(
+            (img, i) => `
+              <button type="button" class="thumb${i === activeImageIndex ? " active" : ""}" data-thumb-index="${i}" aria-label="Ver foto ${i + 1}">
+                <img src="${img}" alt="" />
+              </button>
+            `
+          )
+          .join("")}
       </div>
     </div>
     <div class="product-info">
@@ -214,6 +228,14 @@ function modeloDuvidaLink() {
 }
 
 function wireInteractions() {
+  // Miniaturas da galeria — clicar troca a foto principal exibida
+  document.querySelectorAll("[data-thumb-index]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      activeImageIndex = Number(btn.dataset.thumbIndex);
+      renderProduct();
+    });
+  });
+
   // Variação simples antiga (cor), quando não é produto de compatibilidade
   document.querySelectorAll("[data-variation]").forEach((btn) => {
     btn.addEventListener("click", () => {

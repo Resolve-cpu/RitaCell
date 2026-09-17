@@ -132,6 +132,18 @@ document.addEventListener("click", function (e) {
     return;
   }
 
+  const cartCloseBtn = e.target.closest("#cartClose");
+  if (cartCloseBtn) {
+    closeCartDrawer();
+    return;
+  }
+
+  const cartOverlay = e.target.closest("#cartOverlay");
+  if (cartOverlay) {
+    closeCartDrawer();
+    return;
+  }
+
   // Botões do carrinho lateral (aumentar/diminuir quantidade, remover item)
   const cartMinusBtn = e.target.closest("[data-cart-minus]");
   if (cartMinusBtn) {

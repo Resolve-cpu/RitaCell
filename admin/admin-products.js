@@ -17,6 +17,7 @@ const CATEGORY_LABELS = {
 
 let allProducts = [];
 let searchTerm = "";
+let currentSection = "varejo"; // "varejo" | "atacado"
 let uploadedImages = []; // URLs já enviadas ao Storage para o produto em edição
 let variantRows = []; // [{brand, model, stock}]
 
@@ -62,12 +63,14 @@ async function loadProducts() {
 function renderTable() {
   const tbody = document.getElementById("productsTableBody");
   const term = searchTerm.trim().toLowerCase();
+  const bySection = allProducts.filter((p) => !!p.is_wholesale === (currentSection === "atacado"));
   const list = term
-    ? allProducts.filter((p) => p.name.toLowerCase().includes(term))
-    : allProducts;
+    ? bySection.filter((p) => p.name.toLowerCase().includes(term))
+    : bySection;
 
   if (list.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7" class="empty-state">Nenhum produto encontrado.</td></tr>`;
+    const emptyMsg = currentSection === "atacado" ? "Nenhum produto de atacado cadastrado." : "Nenhum produto encontrado.";
+    tbody.innerHTML = `<tr><td colspan="7" class="empty-state">${emptyMsg}</td></tr>`;
     return;
   }
 
@@ -80,6 +83,7 @@ function renderTable() {
       const stockLabel = p.has_compat_variation
         ? `${(p.product_variants || []).reduce((s, v) => s + (v.stock || 0), 0)} (por modelo)`
         : (p.stock ?? 0);
+      const stockCellLabel = p.is_wholesale ? `${stockLabel} · mín. ${p.min_order_qty || 10}` : stockLabel;
       const statusBadges = `
         <span class="badge ${p.active ? "badge-active" : "badge-inactive"}">${p.active ? "Ativo" : "Inativo"}</span>
         ${p.featured ? `<span class="badge badge-featured">Destaque</span>` : ""}
@@ -90,7 +94,7 @@ function renderTable() {
           <td>${p.name}</td>
           <td>${CATEGORY_LABELS[p.category] || p.category}</td>
           <td>${priceLabel}</td>
-          <td>${stockLabel}</td>
+          <td>${stockCellLabel}</td>
           <td>${statusBadges}</td>
           <td>
             <div class="row-actions">
@@ -148,6 +152,21 @@ async function deleteProduct(id) {
 
 // ---------- Modal de produto (novo/editar) ----------
 function wireUI() {
+  document.querySelectorAll(".admin-sidebar nav button[data-section]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      currentSection = btn.dataset.section;
+      document.querySelectorAll(".admin-sidebar nav button[data-section]").forEach((b) => b.classList.toggle("active", b === btn));
+      const isAtacado = currentSection === "atacado";
+      document.getElementById("sectionTitle").textContent = isAtacado ? "Atacado" : "Produtos";
+      document.getElementById("sectionSubtitle").textContent = isAtacado
+        ? "Produtos vendidos em quantidade mínima, com preço especial de atacado."
+        : "Cadastre, edite e controle o que aparece no site.";
+      searchTerm = "";
+      document.getElementById("searchInput").value = "";
+      renderTable();
+    });
+  });
+
   document.getElementById("searchInput").addEventListener("input", (e) => {
     searchTerm = e.target.value;
     renderTable();
@@ -155,6 +174,10 @@ function wireUI() {
 
   document.getElementById("newProductBtn").addEventListener("click", () => openModal(null));
   document.getElementById("cancelModalBtn").addEventListener("click", closeModal);
+
+  document.getElementById("fIsWholesale").addEventListener("change", (e) => {
+    document.getElementById("minQtyWrap").style.display = e.target.checked ? "block" : "none";
+  });
 
   document.getElementById("fHasCompat").addEventListener("change", (e) => {
     const on = e.target.checked;
@@ -176,7 +199,8 @@ function wireUI() {
 function openModal(id) {
   const product = id ? allProducts.find((p) => p.id === id) : null;
 
-  document.getElementById("modalTitle").textContent = product ? "Editar produto" : "Novo produto";
+  const modalTitle = product ? "Editar produto" : (currentSection === "atacado" ? "Novo produto de atacado" : "Novo produto");
+  document.getElementById("modalTitle").textContent = modalTitle;
   document.getElementById("productId").value = product ? product.id : "";
   document.getElementById("fName").value = product ? product.name : "";
   document.getElementById("fCategory").value = product ? product.category : "capinhas";
@@ -191,6 +215,11 @@ function openModal(id) {
   document.getElementById("fCheckoutLink").value = product ? product.checkout_link || "" : "";
   document.getElementById("fActive").checked = product ? product.active : true;
   document.getElementById("fFeatured").checked = product ? !!product.featured : false;
+
+  const isWholesale = product ? !!product.is_wholesale : currentSection === "atacado";
+  document.getElementById("fIsWholesale").checked = isWholesale;
+  document.getElementById("fMinQty").value = product ? product.min_order_qty || 10 : 10;
+  document.getElementById("minQtyWrap").style.display = isWholesale ? "block" : "none";
 
   const hasCompat = product ? !!product.has_compat_variation : false;
   document.getElementById("fHasCompat").checked = hasCompat;
@@ -313,10 +342,14 @@ async function saveProduct(e) {
     const id = document.getElementById("productId").value || null;
     const name = document.getElementById("fName").value.trim();
     const hasCompat = document.getElementById("fHasCompat").checked;
+    const isWholesale = document.getElementById("fIsWholesale").checked;
 
     if (!name) throw new Error("Informe o nome do produto.");
     if (hasCompat && variantRows.some((v) => !v.brand.trim() || !v.model.trim())) {
       throw new Error("Preencha marca e modelo em todas as linhas de variação, ou remova as linhas vazias.");
+    }
+    if (isWholesale && (!document.getElementById("fMinQty").value || Number(document.getElementById("fMinQty").value) < 1)) {
+      throw new Error("Informe uma quantidade mínima de compra válida para o produto de atacado.");
     }
 
     const payload = {
@@ -335,6 +368,8 @@ async function saveProduct(e) {
       images: uploadedImages,
       compatibility_note: document.getElementById("fCompatNote").value.trim(),
       has_compat_variation: hasCompat,
+      is_wholesale: isWholesale,
+      min_order_qty: isWholesale ? Number(document.getElementById("fMinQty").value) || 10 : 1,
       checkout_link: document.getElementById("fCheckoutLink").value.trim() || null,
       active: document.getElementById("fActive").checked,
       featured: document.getElementById("fFeatured").checked,

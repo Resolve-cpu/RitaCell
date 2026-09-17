@@ -175,3 +175,9 @@ document.addEventListener("click", function (e) {
 });
 
 initCartCheckout();
+
+// Garante que o contador do carrinho já apareça certo assim que a página
+// carregar (e não só depois de alguma ação do cliente nessa mesma visita)
+window.addEventListener("catalog-ready", () => {
+  renderCartDrawer();
+});

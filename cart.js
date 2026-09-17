@@ -1,9 +1,22 @@
 function getCart() {
+  let cart;
   try {
-    return JSON.parse(localStorage.getItem("ritacell_cart") || "[]");
+    cart = JSON.parse(localStorage.getItem("ritacell_cart") || "[]");
   } catch {
-    return [];
+    cart = [];
   }
+  // Remove itens "fantasma" — produtos que foram editados/excluídos no
+  // painel depois que o cliente já tinha adicionado ao carrinho. Só faz
+  // essa limpeza quando o catálogo já carregou de verdade, para não
+  // apagar o carrinho à toa antes dos dados do banco chegarem.
+  if (typeof PRODUCTS !== "undefined" && PRODUCTS.length > 0) {
+    const cleaned = cart.filter((l) => findProduct(l.id));
+    if (cleaned.length !== cart.length) {
+      cart = cleaned;
+      saveCart(cart);
+    }
+  }
+  return cart;
 }
 
 function saveCart(cart) {

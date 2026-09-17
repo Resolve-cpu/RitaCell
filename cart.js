@@ -78,7 +78,7 @@ function renderCartDrawer() {
         if (!p) return "";
         return `
           <div class="cart-line">
-            <div class="cart-thumb"></div>
+            <div class="cart-thumb">${productMediaHTML(p, 20)}</div>
             <div class="cart-line-info">
               <p class="cart-line-name">${p.name}</p>
               ${l.variation ? `<span class="cart-line-variation">${l.variation}</span>` : ""}

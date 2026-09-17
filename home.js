@@ -35,7 +35,7 @@ function renderHome() {
       addToCart(btn.dataset.add, 1);
     });
   }
-  const featured = (typeof PRODUCTS !== "undefined" ? PRODUCTS : []).filter((p) => p.featured).slice(0, 6);
+  const featured = (typeof PRODUCTS !== "undefined" ? PRODUCTS : []).filter((p) => p.featured && !p.isWholesale).slice(0, 6);
   grid.innerHTML = featured.length
     ? featured.map(bestSellerCardHTML).join("")
     : `<p style="grid-column:1/-1; color:var(--text-soft); padding:24px 0;">Nenhum produto em destaque no momento.</p>`;

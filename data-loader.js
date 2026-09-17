@@ -30,6 +30,8 @@ function mapProductRow(row) {
     relatedIds: [],
     checkoutLink: row.checkout_link || null,
     featured: !!row.featured,
+    isWholesale: !!row.is_wholesale,
+    minOrderQty: row.min_order_qty || 1,
   };
 }
 

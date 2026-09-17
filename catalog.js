@@ -28,7 +28,7 @@ function productCardHTML(p) {
 function renderProdutosGrid() {
   const grid = document.getElementById("productGrid");
   if (!grid) return;
-  const all = typeof PRODUCTS !== "undefined" ? PRODUCTS : [];
+  const all = (typeof PRODUCTS !== "undefined" ? PRODUCTS : []).filter((p) => !p.isWholesale);
   let list = produtosCat === "todos" ? all : all.filter((p) => p.category === produtosCat);
   if (produtosQuery.trim()) {
     const q = produtosQuery.trim().toLowerCase();

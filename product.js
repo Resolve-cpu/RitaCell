@@ -17,7 +17,7 @@ let selectedVariation = product.variations?.[0]?.options?.[0] || null;
 let selectedBrand = null;
 let selectedModel = null;
 
-let qty = 1;
+let qty = product.isWholesale ? product.minOrderQty || 10 : 1;
 
 // Galeria de fotos: qual imagem está sendo exibida como principal
 let activeImageIndex = 0;
@@ -194,6 +194,7 @@ function renderProduct() {
       ${priceHTML}
       <p class="p-desc">${product.description || ""}</p>
       ${isCompatProduct ? compatSelectorHTML() : variationHTML()}
+      ${product.isWholesale ? `<p class="wholesale-note">Venda por atacado — quantidade mínima: ${product.minOrderQty || 10} unidades</p>` : ""}
       ${
         product.price
           ? `<div class="qty-row">
@@ -263,7 +264,8 @@ function wireInteractions() {
   });
 
   document.getElementById("qtyMinus")?.addEventListener("click", () => {
-    qty = Math.max(1, qty - 1);
+    const floor = product.isWholesale ? product.minOrderQty || 10 : 1;
+    qty = Math.max(floor, qty - 1);
     document.getElementById("qtyValue").textContent = qty;
   });
   document.getElementById("qtyPlus")?.addEventListener("click", () => {

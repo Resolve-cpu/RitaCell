@@ -1143,6 +1143,7 @@ textarea:focus-visible {
 .pcard-name { font-size: 0.96rem; font-weight: 700; color: var(--ink); line-height: 1.35; }
 .pcard-price { font-family: var(--font-mono); font-weight: 700; color: var(--blue-dark); margin-top: auto; padding-top: 10px; }
 .pcard-price.consult { color: var(--gold); font-family: var(--font-body); font-size: 0.86rem; }
+.wholesale-min-tag { font-size: 0.76rem; font-weight: 600; color: var(--text-soft); margin-top: 2px; }
 .pcard-cta { margin-top: 10px; display: flex; gap: 8px; }
 .pcard-cta .btn { flex: 1; padding: 10px 12px; font-size: 0.82rem; min-height: 40px; }
 
@@ -1237,6 +1238,18 @@ textarea:focus-visible {
   margin: -8px 0 20px;
 }
 .compat-help-link:hover { color: var(--blue); }
+
+.wholesale-note {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--blue);
+  background: var(--neutral-50);
+  border: 1px solid var(--neutral-200);
+  border-radius: 8px;
+  padding: 9px 12px;
+  margin-bottom: 14px;
+  display: inline-block;
+}
 
 .qty-row { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
 .qty-stepper {
